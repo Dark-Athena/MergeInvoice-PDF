@@ -68,7 +68,7 @@ php -S localhost:8000
 
 ## 开源协议
 
-MIT License
+Apache 2.0 License
 
 ## 致谢
 
