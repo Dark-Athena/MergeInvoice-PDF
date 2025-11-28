@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF发票合并器 - 免费在线PDF合并打印工具</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 PDF发票合并器</h1>
+            <p class="subtitle">多个PDF一键合并打印 | 完全免费 · 本地处理 · 安全私密</p>
+        </header>
+
+        <main>
+            <section class="upload-section">
+                <div id="dropZone" class="drop-zone">
+                    <div class="drop-zone-content">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                        </svg>
+                        <h3>拖拽或点击上传PDF文件</h3>
+                        <p>支持批量上传多个PDF文件</p>
+                        <input type="file" id="fileInput" multiple accept=".pdf" hidden>
+                        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+                            选择文件
+                        </button>
+                    </div>
+                </div>
+
+                <div id="fileList" class="file-list"></div>
+            </section>
+
+            <section class="options-section" id="optionsSection" style="display: none;">
+                <h2>页面设置</h2>
+                
+                <div class="layout-controls">
+                    <div class="control-group">
+                        <label class="control-label">纸张大小</label>
+                        <select id="paperSizeSelect" class="select-input">
+                            <option value="a4" selected>A4 (210×297mm)</option>
+                            <option value="a3">A3 (297×420mm)</option>
+                            <option value="a5">A5 (148×210mm)</option>
+                            <option value="letter">Letter (216×279mm)</option>
+                            <option value="legal">Legal (216×356mm)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">页面方向</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="orientation" value="portrait" checked>
+                                <span class="radio-card">
+                                    <svg class="orientation-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <rect x="7" y="3" width="10" height="18" rx="1"/>
+                                    </svg>
+                                    <span>纵向</span>
+                                </span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="orientation" value="landscape">
+                                <span class="radio-card">
+                                    <svg class="orientation-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <rect x="3" y="7" width="18" height="10" rx="1"/>
+                                    </svg>
+                                    <span>横向</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">行数</label>
+                        <input type="number" id="rowsInput" min="1" max="5" value="2" class="number-input">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">列数</label>
+                        <input type="number" id="colsInput" min="1" max="5" value="1" class="number-input">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">间距 (像素)</label>
+                        <input type="number" id="paddingInput" min="0" max="50" value="10" class="number-input">
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 30px;">快捷布局</h2>
+                <div class="layout-options">
+                    <button class="preset-btn" onclick="app.setPreset(2, 1, 'portrait')">
+                        <div class="preset-preview">
+                            <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 4px;">
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                            </div>
+                        </div>
+                        <span>2×1 纵向 (默认)</span>
+                    </button>
+                    <button class="preset-btn" onclick="app.setPreset(1, 2, 'portrait')">
+                        <div class="preset-preview">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                            </div>
+                        </div>
+                        <span>1×2 纵向</span>
+                    </button>
+                    <button class="preset-btn" onclick="app.setPreset(2, 2, 'portrait')">
+                        <div class="preset-preview">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px;">
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                            </div>
+                        </div>
+                        <span>2×2 纵向 (默认)</span>
+                    </button>
+                    <button class="preset-btn" onclick="app.setPreset(1, 3, 'portrait')">
+                        <div class="preset-preview">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px;">
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                            </div>
+                        </div>
+                        <span>1×3 纵向</span>
+                    </button>
+                    <button class="preset-btn" onclick="app.setPreset(2, 1, 'landscape')">
+                        <div class="preset-preview">
+                            <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 4px;">
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                            </div>
+                        </div>
+                        <span>2×1 横向</span>
+                    </button>
+                    <button class="preset-btn" onclick="app.setPreset(2, 2, 'landscape')">
+                        <div class="preset-preview">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px;">
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                            </div>
+                        </div>
+                        <span>2×2 横向</span>
+                    </button>
+                    <button class="preset-btn" onclick="app.setPreset(3, 1, 'landscape')">
+                        <div class="preset-preview">
+                            <div style="display: grid; grid-template-rows: 1fr 1fr 1fr; gap: 4px;">
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                            </div>
+                        </div>
+                        <span>3×1 横向</span>
+                    </button>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="mergeBtn" class="btn-primary btn-large">
+                        🔄 合并并预览
+                    </button>
+                    <button id="downloadBtn" class="btn-success btn-large" style="display: none;">
+                        ⬇️ 下载合并的PDF
+                    </button>
+                    <button id="clearBtn" class="btn-secondary">
+                        🗑️ 清空文件
+                    </button>
+                </div>
+            </section>
+
+            <section class="preview-section" id="previewSection" style="display: none;">
+                <h2>预览</h2>
+                <div id="previewContainer" class="preview-container"></div>
+            </section>
+
+            <section class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div id="progressBar" class="progress-fill"></div>
+                </div>
+                <p id="progressText" class="progress-text">处理中...</p>
+            </section>
+        </main>
+
+        <footer>
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">🔒</span>
+                    <div>
+                        <h4>本地处理</h4>
+                        <p>所有数据在浏览器本地处理，不上传服务器</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">⚡</span>
+                    <div>
+                        <h4>快速高效</h4>
+                        <p>即用无需安装，支持批量处理</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">💯</span>
+                    <div>
+                        <h4>完全免费</h4>
+                        <p>无限次使用，无需注册</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+    <script>
+        // 配置 PDF.js worker 和 CMap
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+            // 配置 CMap 支持中文
+            window.pdfjsConfig = {
+                cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/',
+                cMapPacked: true
+            };
+        }
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
