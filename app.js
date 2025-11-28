@@ -452,7 +452,7 @@ class PDFMerger {
             // 添加说明文字
             const infoText = document.createElement('p');
             infoText.style.cssText = 'text-align: center; color: #4F46E5; padding: 15px; font-size: 0.9rem;';
-            infoText.textContent = `✅ PDF合并已完成！共 ${pdf.numPages} 页，以上为完整预览效果，点击下方按钮下载完整文件`;
+            infoText.textContent = `✅ PDF合并已完成！共 ${pdf.numPages} 页，以上为预览效果，点击上方下载按钮下载完整文件`;
             this.previewContainer.appendChild(infoText);
 
             // 确认 mergedPdfBytes 没有被清空
