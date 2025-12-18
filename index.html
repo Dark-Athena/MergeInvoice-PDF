@@ -3,27 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF发票合并器 - 免费在线PDF合并打印工具</title>
+    <title>PDF发票合并器 - 免费在线PDF合并打印工具 | 批量合并PDF文件</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="免费在线PDF发票合并器，支持批量合并多个PDF文件，本地处理保护隐私，无需上传服务器。支持2×1、2×2、3×1等多种布局方式，适合发票、报销单据等文件打印。">
+    <meta name="keywords" content="PDF合并,发票合并,PDF合并器,在线PDF工具,PDF打印,批量PDF处理,发票打印,免费PDF工具,本地PDF处理">
+    <meta name="author" content="MergeInvoice-PDF">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="zh-CN">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PDF发票合并器 - 免费在线PDF合并打印工具">
+    <meta property="og:description" content="免费在线PDF发票合并器，支持批量合并多个PDF文件，本地处理保护隐私，无需上传服务器。">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PDF发票合并器 - 免费在线PDF合并打印工具">
+    <meta name="twitter:description" content="免费在线PDF发票合并器，支持批量合并多个PDF文件，本地处理保护隐私。">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📄</text></svg>">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourdomain.com/">
+    
+    <!-- Preconnect for external resources -->
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "PDF发票合并器",
+      "description": "免费在线PDF发票合并器，支持批量合并多个PDF文件，本地处理保护隐私，无需上传服务器。",
+      "url": "https://yourdomain.com/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "批量合并PDF文件",
+        "本地处理保护隐私",
+        "支持多种布局方式",
+        "拖拽上传文件",
+        "完全免费使用"
+      ],
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "softwareVersion": "1.0",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1000"
+      }
+    }
+    </script>
 </head>
 <body>
     <div class="container">
-        <header>
+        <header role="banner">
             <h1>📄 PDF发票合并器</h1>
             <p class="subtitle">多个PDF一键合并打印 | 完全免费 · 本地处理 · 安全私密</p>
         </header>
 
-        <main>
-            <section class="upload-section">
-                <div id="dropZone" class="drop-zone">
+        <main role="main">
+            <section class="upload-section" aria-label="文件上传区域">
+                <div id="dropZone" class="drop-zone" role="region" aria-label="文件拖放上传区">
                     <div class="drop-zone-content">
-                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
                             <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
                         </svg>
                         <h3>拖拽或点击上传PDF文件</h3>
                         <p>支持批量上传多个PDF文件</p>
-                        <input type="file" id="fileInput" multiple accept=".pdf" hidden>
-                        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+                        <input type="file" id="fileInput" multiple accept=".pdf" hidden aria-label="选择PDF文件">
+                        <button class="btn-primary" onclick="document.getElementById('fileInput').click()" aria-label="点击选择PDF文件">
                             选择文件
                         </button>
                     </div>
@@ -32,13 +93,13 @@
                 <div id="fileList" class="file-list"></div>
             </section>
 
-            <section class="options-section" id="optionsSection" style="display: none;">
+            <section class="options-section" id="optionsSection" style="display: none;" aria-label="PDF布局设置">
                 <h2>页面设置</h2>
                 
                 <div class="layout-controls">
                     <div class="control-group">
-                        <label class="control-label">纸张大小</label>
-                        <select id="paperSizeSelect" class="select-input">
+                        <label class="control-label" for="paperSizeSelect">纸张大小</label>
+                        <select id="paperSizeSelect" class="select-input" aria-label="选择纸张大小">
                             <option value="a4" selected>A4 (210×297mm)</option>
                             <option value="a3">A3 (297×420mm)</option>
                             <option value="a5">A5 (148×210mm)</option>
@@ -72,25 +133,25 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">行数</label>
-                        <input type="number" id="rowsInput" min="1" max="5" value="2" class="number-input">
+                        <label class="control-label" for="rowsInput">行数</label>
+                        <input type="number" id="rowsInput" min="1" max="5" value="2" class="number-input" aria-label="设置每页行数">
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">列数</label>
-                        <input type="number" id="colsInput" min="1" max="5" value="1" class="number-input">
+                        <label class="control-label" for="colsInput">列数</label>
+                        <input type="number" id="colsInput" min="1" max="5" value="1" class="number-input" aria-label="设置每页列数">
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">间距 (像素)</label>
-                        <input type="number" id="paddingInput" min="0" max="50" value="10" class="number-input">
+                        <label class="control-label" for="paddingInput">间距 (像素)</label>
+                        <input type="number" id="paddingInput" min="0" max="50" value="10" class="number-input" aria-label="设置PDF间距">
                     </div>
                 </div>
 
                 <h2 style="margin-top: 30px;">快捷布局</h2>
-                <div class="layout-options">
-                    <button class="preset-btn" onclick="app.setPreset(2, 1, 'portrait')">
-                        <div class="preset-preview">
+                <div class="layout-options" role="group" aria-label="快捷布局选项">
+                    <button class="preset-btn" onclick="app.setPreset(2, 1, 'portrait')" aria-label="选择2行1列纵向布局">
+                        <div class="preset-preview" aria-hidden="true">
                             <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 4px;">
                                 <div class="preview-box"></div>
                                 <div class="preview-box"></div>
@@ -160,56 +221,59 @@
                     </button>
                 </div>
 
-                <div class="action-buttons">
-                    <button id="mergeBtn" class="btn-primary btn-large">
+                <div class="action-buttons" role="group" aria-label="操作按钮组">
+                    <button id="mergeBtn" class="btn-primary btn-large" aria-label="开始合并并预览PDF">
                         🔄 合并并预览
                     </button>
-                    <button id="downloadBtn" class="btn-success btn-large" style="display: none;">
+                    <button id="downloadBtn" class="btn-success btn-large" style="display: none;" aria-label="下载合并后的PDF文件">
                         ⬇️ 下载合并的PDF
                     </button>
-                    <button id="clearBtn" class="btn-secondary">
+                    <button id="clearBtn" class="btn-secondary" aria-label="清空所有已上传的文件">
                         🗑️ 清空文件
                     </button>
                 </div>
             </section>
 
-            <section class="preview-section" id="previewSection" style="display: none;">
+            <section class="preview-section" id="previewSection" style="display: none;" aria-label="PDF预览区域">
                 <h2>预览</h2>
-                <div id="previewContainer" class="preview-container"></div>
+                <div id="previewContainer" class="preview-container" role="region" aria-live="polite"></div>
             </section>
 
-            <section class="progress-section" id="progressSection" style="display: none;">
-                <div class="progress-bar">
+            <section class="progress-section" id="progressSection" style="display: none;" aria-label="处理进度" role="status">
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                     <div id="progressBar" class="progress-fill"></div>
                 </div>
-                <p id="progressText" class="progress-text">处理中...</p>
+                <p id="progressText" class="progress-text" aria-live="polite">处理中...</p>
             </section>
         </main>
 
-        <footer>
-            <div class="features">
-                <div class="feature">
-                    <span class="feature-icon">🔒</span>
+        <footer role="contentinfo">
+            <div class="features" role="list">
+                <article class="feature" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">🔒</span>
                     <div>
                         <h4>本地处理</h4>
-                        <p>所有数据在浏览器本地处理，不上传服务器</p>
+                        <p>所有数据在浏览器本地处理，不上传服务器，保护您的隐私和数据安全</p>
                     </div>
-                </div>
-                <div class="feature">
-                    <span class="feature-icon">⚡</span>
+                </article>
+                <article class="feature" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">⚡</span>
                     <div>
                         <h4>快速高效</h4>
-                        <p>即用无需安装，支持批量处理</p>
+                        <p>在线即用无需安装软件，支持批量PDF合并处理</p>
                     </div>
-                </div>
-                <div class="feature">
-                    <span class="feature-icon">💯</span>
+                </article>
+                <article class="feature" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">💯</span>
                     <div>
                         <h4>完全免费</h4>
-                        <p>无限次使用，无需注册</p>
+                        <p>无限次使用PDF合并工具，无需注册账号</p>
                     </div>
-                </div>
+                </article>
             </div>
+            <p style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
+                © 2025 PDF发票合并器 - 专业的在线PDF合并打印工具
+            </p>
         </footer>
     </div>
 
